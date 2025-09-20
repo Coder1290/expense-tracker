@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'tracker/style.css' %}">
+</head>
+<body>
+    <div class="page-box">
+        <h2>Create Your Account</h2>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            <!-- Username -->
+            <label for="id_username">Username:</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+                <div class="form-errors">{{ form.username.errors }}</div>
+            {% endif %}
+
+            <!-- Password -->
+            <label for="id_password1">Password:</label>
+            {{ form.password1 }}
+            {% if form.password1.errors %}
+                <div class="form-errors">{{ form.password1.errors }}</div>
+            {% endif %}
+
+            <!-- Confirm Password -->
+            <label for="id_password2">Confirm password:</label>
+            {{ form.password2 }}
+            {% if form.password2.errors %}
+                <div class="form-errors">{{ form.password2.errors }}</div>
+            {% endif %}
+
+            <!-- Global non-field errors -->
+            {% if form.non_field_errors %}
+                <div class="form-errors">{{ form.non_field_errors }}</div>
+            {% endif %}
+
+            <button type="submit" class="nav-button">Sign Up</button>
+        </form>
+
+        <p class="form-meta">
+            Already have an account?
+            <a href="{% url 'login' %}" class="link-accent">Login</a>
+        </p>
+    </div>
+</body>
+</html>

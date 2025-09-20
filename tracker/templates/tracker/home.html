@@ -1,0 +1,11 @@
+{% extends 'tracker/base.html' %}
+
+{% block content %}
+<div class="page-box">
+    <h1>Welcome to Your Expense Tracker 💸</h1>
+    <p>Track your spending, stay in control, and plan smarter.</p>
+
+    <a href="{% url 'login' %}" class="nav-button">Login</a>
+    <a href="{% url 'signup' %}" class="nav-button">Sign Up</a>
+</div>
+{% endblock %}

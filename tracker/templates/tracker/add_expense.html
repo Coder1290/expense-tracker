@@ -1,0 +1,14 @@
+{% extends 'tracker/base.html' %}
+
+{% block content %}
+<div class="page-box">
+    <h2>Add New Expense</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Expense</button>
+    </form>
+
+    <a href="{% url 'home' %}" class="nav-button">Back to Home</a>
+</div>
+{% endblock %}

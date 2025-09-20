@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'tracker/style.css' %}">
+</head>
+<body>
+    <div class="page-box">
+        <h2>Login to Your Expense Tracker</h2>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            <!-- Username -->
+            <label for="id_username">Username:</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+                <div class="form-errors">{{ form.username.errors }}</div>
+            {% endif %}
+
+            <!-- Password -->
+            <label for="id_password">Password:</label>
+            {{ form.password }}
+            {% if form.password.errors %}
+                <div class="form-errors">{{ form.password.errors }}</div>
+            {% endif %}
+
+            <!-- Non-field errors (like invalid login) -->
+            {% if form.non_field_errors %}
+                <div class="form-errors">{{ form.non_field_errors }}</div>
+            {% endif %}
+
+            <button type="submit" class="nav-button">Login</button>
+        </form>
+
+        <p class="form-meta">
+            Don't have an account?
+            <a href="{% url 'signup' %}" class="link-accent">Register</a>
+        </p>
+    </div>
+</body>
+</html>

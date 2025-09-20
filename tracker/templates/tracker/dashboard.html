@@ -1,0 +1,145 @@
+{% extends 'tracker/base.html' %}
+
+{% block content %}
+<div class="page-box">
+    <h2>Total Spending: ₹{{ total }}</h2>
+
+    <!-- 🔘 Toggle Buttons -->
+    <div style="text-align: center; margin-bottom: 20px;">
+        <button onclick="showChart('pie')" class="toggle-btn">Category Chart</button>
+        <button onclick="showChart('bar')" class="toggle-btn">Monthly Chart</button>
+    </div>
+
+    <!-- 📊 Chart Container (empty until toggled) -->
+    <div id="chartContainer" style="text-align: center; margin-bottom: 20px;"></div>
+
+    <h3>Recent Expenses</h3>
+    <ul class="expense-list">
+        {% for expense in expenses %}
+        <li class="expense-item">
+            <span class="expense-date">{{ expense.date }}</span>
+            <span class="expense-title">{{ expense.title }}</span>
+            <span class="expense-amount">₹{{ expense.amount }}</span>
+            <span class="expense-category">{{ expense.category }}</span>
+        </li>
+        {% empty %}
+        <li>No expenses recorded yet.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'home' %}" class="nav-button">Back to Home</a>
+</div>
+
+<!-- ✅ Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    let categoryChart;
+    let monthlyChart;
+
+    function showChart(type) {
+        const container = document.getElementById('chartContainer');
+        container.innerHTML = ''; // Clear previous chart
+
+        const canvas = document.createElement('canvas');
+        canvas.className = 'chart-canvas';
+        canvas.width = 400;
+        canvas.height = 400;
+        canvas.style.opacity = 0;
+        container.appendChild(canvas);
+
+        setTimeout(() => canvas.style.opacity = 1, 100);
+
+        const ctx = canvas.getContext('2d');
+
+        if (type === 'pie') {
+            categoryChart?.destroy();
+
+            categoryChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: {{ chart_labels|safe }},
+                    datasets: [{
+                        label: 'Spending by Category',
+                        data: {{ chart_data|safe }},
+                        backgroundColor: ['#6200ea', '#03dac6', '#ff0266', '#ffd600', '#00c853'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    animation: {
+                        animateScale: true,
+                        animateRotate: true,
+                        duration: 1200,
+                        easing: 'easeOutQuart'
+                    },
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        title: {
+                            display: true,
+                            text: 'Spending Breakdown by Category'
+                        },
+                        tooltip: {
+                            enabled: true,
+                            backgroundColor: '#333',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: '#6200ea',
+                            borderWidth: 1
+                        }
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        onHover: function(event, chartElement) {
+                            event.native.target.style.cursor = chartElement.length ? 'pointer' : 'default';
+                        }
+                    }
+                }
+            });
+
+        } else {
+            monthlyChart?.destroy();
+
+            monthlyChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: {{ bar_labels|safe }},
+                    datasets: [{
+                        label: 'Monthly Spending',
+                        data: {{ bar_data|safe }},
+                        backgroundColor: '#42A5F5',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    animation: {
+                        duration: 1200,
+                        easing: 'easeOutQuart'
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₹' + value;
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: 'Spending Trend by Month'
+                        }
+                    }
+                }
+            });
+        }
+    }
+</script>
+
+
+{% endblock %}
