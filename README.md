@@ -60,10 +60,10 @@ This project was developed as part of my personal projects and refined with mode
 ![Signup Page](screenshot/Signup.png)
 
 ### 📊 Dashboard with Bar Chart
-![Dashboard](screenshot/Dashboard_bar-chart.png)
+![Dashboard](screenshot/Bar.png)
 
 ### 📊 Dashboard with Pie Chart
-![Dashboard](screenshot/Dashboard_pie-chart.png)
+![Dashboard](screenshot/Pie.png)
 
 
 ---
