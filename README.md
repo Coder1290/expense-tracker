@@ -1,7 +1,7 @@
 # 💸 Expense Tracker (Django)
 
 A full‑stack web application built with **Python + Django** to help users securely track their expenses, visualize spending patterns, and manage budgets.  
-This project was developed as part of my BCA final year work and refined with modern UI/UX features.
+This project was developed as part of my BSC IT final year work and refined with modern UI/UX features.
 
 ---
 
@@ -66,6 +66,6 @@ This project was developed as part of my BCA final year work and refined with mo
 
 ## 👤 Author
 **Kuljinder Singh**  
-🎓 Final Year BCA Student | 💻 Aspiring Full Stack Python Developer  
+🎓 Final Year BSC IT Student | 💻 Aspiring Full Stack Python Developer  
 GitHub: [Coder1290](https://github.com/Coder1290)
 
